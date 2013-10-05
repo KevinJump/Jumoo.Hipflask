@@ -70,7 +70,7 @@ namespace Jumoo.Hipflask
             if (File.Exists(dest))
                 File.Delete(dest);
 
-            Console.WriteLine("Saving {0} to {1}", location, dest);
+            LogHelper.Info<Hipflask>("Saving {0} to {1}", ()=> location, ()=> dest);
 
             using (WebClient client = new WebClient())
             {
@@ -94,7 +94,7 @@ namespace Jumoo.Hipflask
                     Directory.Delete(unzipFolder, true);
 
                 ZipFile.ExtractToDirectory(zipfile, unzipFolder);
-                Console.WriteLine("Unzipped to {0}", unzipFolder);
+                LogHelper.Info<Hipflask>("Unzipped to {0}", ()=> unzipFolder);
             }
         }
 
@@ -115,7 +115,7 @@ namespace Jumoo.Hipflask
                 string source = Path.Combine(unzipFolder, map.Key);
                 string dest = Path.Combine(_umbracoRoot, map.Value);
 
-                Console.WriteLine("Directory {0} to {1}", source, dest);
+                LogHelper.Info<Hipflask>("Directory {0} to {1}", ()=> source, ()=> dest);
                 CopyDirectory(source, dest);
             }
 
@@ -129,7 +129,7 @@ namespace Jumoo.Hipflask
 
             foreach (KeyValuePair<string, string> map in filemap)
             {
-                Console.WriteLine("File: {0} {1}", map.Key, map.Value);
+                LogHelper.Info<Hipflask>("File: {0} {1}", ()=> map.Key, ()=> map.Value);
                 string source = Path.Combine(sourceFolder, map.Key);
                 string dest = Path.Combine(_umbracoRoot, map.Value);
                 File.Copy(source, dest, true);
@@ -145,7 +145,6 @@ namespace Jumoo.Hipflask
             foreach (string file in Directory.GetFiles(source))
             {
                 string destFile = Path.Combine(destination, Path.GetFileName(file));
-                // Console.WriteLine("Copy {0}, {1}", file, destFile); 
                 File.Copy(file, destFile, true);
             }
 
@@ -156,6 +155,5 @@ namespace Jumoo.Hipflask
                 CopyDirectory(dir, destDir);
             }
         }
-               
     }
 }

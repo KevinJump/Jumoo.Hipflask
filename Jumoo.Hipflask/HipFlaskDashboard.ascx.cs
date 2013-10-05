@@ -74,7 +74,8 @@ namespace Jumoo.Hipflask
         {
             HipFlaskSettings s = new HipFlaskSettings();
             s.UpdateSettingsFile();
-            Status.Text = "Updated Settings (Refresh?)"; 
+            Status.Text = "Updated Settings";
+            Response.Redirect(Request.RawUrl);
         }
     }
 }

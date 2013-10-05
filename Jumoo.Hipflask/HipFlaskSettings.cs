@@ -7,6 +7,7 @@ using System.Xml;
 using System.Xml.Linq;
 
 using Umbraco.Core.IO;
+using Umbraco.Core.Logging;
 
 using System.Net; 
 
@@ -101,18 +102,24 @@ namespace Jumoo.Hipflask
         public bool CheckForUpdate()
         {
             string updateUrl = settings.Attribute("update").Value;
-
-            XElement updatefile = XElement.Load(updateUrl);
-
-            if (updatefile.Name == "hipflask")
+            try
             {
-                string currentVersion = settings.Attribute("version").Value;
-                string newVersion = updatefile.Attribute("version").Value;
+                XElement updatefile = XElement.Load(updateUrl);
 
-                if (newVersion != currentVersion)
+                if (updatefile.Name == "hipflask")
                 {
-                    return true; 
+                    string currentVersion = settings.Attribute("version").Value;
+                    string newVersion = updatefile.Attribute("version").Value;
+
+                    if (newVersion != currentVersion)
+                    {
+                        return true;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Info<HipFlaskSettings>("Cant do update {0}", () => ex.ToString());
             }
 
             return false; 
@@ -125,8 +132,15 @@ namespace Jumoo.Hipflask
 
             using (WebClient client = new WebClient())
             {
-                client.DownloadFile(updateUrl, settingsFile);
-                Init(); 
+                try
+                {
+                    client.DownloadFile(updateUrl, settingsFile);
+                    Init();
+                }
+                catch (Exception ex)
+                {
+
+                }
             }
         }
 
