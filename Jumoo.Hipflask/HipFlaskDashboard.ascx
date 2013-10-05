@@ -40,7 +40,7 @@
             </asp:UpdatePanel>
             <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="UpdatePanel1">
                 <ProgressTemplate>
-                   Getting the Hip : <img text="Loading..." src="../umbraco_client/images/progressBar.gif">
+                   Getting the Hip : <img text="Loading..." src="/umbraco_client/images/progressBar.gif">
                 </ProgressTemplate>
             </asp:UpdateProgress>
         </div>
