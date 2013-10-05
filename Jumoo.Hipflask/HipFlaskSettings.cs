@@ -6,7 +6,9 @@ using System.Web;
 using System.Xml;
 using System.Xml.Linq;
 
-using Umbraco.Core.IO; 
+using Umbraco.Core.IO;
+
+using System.Net; 
 
 namespace Jumoo.Hipflask
 {
@@ -15,6 +17,11 @@ namespace Jumoo.Hipflask
         XElement settings;
 
         public HipFlaskSettings()
+        {
+            Init(); 
+        }
+
+        private void Init()
         {
             string settingsFile = IOHelper.MapPath("~/config/hipflask.config");
             settings = XElement.Load(settingsFile);
@@ -93,7 +100,35 @@ namespace Jumoo.Hipflask
 
         public bool CheckForUpdate()
         {
-            return false;
+            string updateUrl = settings.Attribute("update").Value;
+
+            XElement updatefile = XElement.Load(updateUrl);
+
+            if (updatefile.Name == "hipflask")
+            {
+                string currentVersion = settings.Attribute("version").Value;
+                string newVersion = updatefile.Attribute("version").Value;
+
+                if (newVersion != currentVersion)
+                {
+                    return true; 
+                }
+            }
+
+            return false; 
         }
+
+        public void UpdateSettingsFile()
+        {
+            string updateUrl = settings.Attribute("update").Value;
+            string settingsFile = IOHelper.MapPath("~/config/hipflask.config");
+
+            using (WebClient client = new WebClient())
+            {
+                client.DownloadFile(updateUrl, settingsFile);
+                Init(); 
+            }
+        }
+
     }
 }

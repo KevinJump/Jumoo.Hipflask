@@ -117,7 +117,6 @@ namespace Jumoo.Hipflask
 
                 Console.WriteLine("Directory {0} to {1}", source, dest);
                 CopyDirectory(source, dest);
-
             }
 
         }
@@ -125,7 +124,6 @@ namespace Jumoo.Hipflask
         private void InstallFiles(string name)
         {
             string sourceFolder = Path.Combine(_hipflaskfolder, name);
-
 
             Dictionary<string, string> filemap = _settings.GetFiles(name);
 
@@ -158,7 +156,6 @@ namespace Jumoo.Hipflask
                 CopyDirectory(dir, destDir);
             }
         }
-
-
+               
     }
 }

@@ -9,6 +9,11 @@
             <p>Hipflask downloads directly from the internet. so they are as upto date as they are</p>
             <asp:UpdatePanel ID="UpdatePanel1" UpdateMode="Conditional" runat="server">
                 <ContentTemplate>
+                    <asp:Panel ID="updateCheck" runat="server" Visible="false">
+                        <div style="background-color: #d74040; padding:1em; font-size:1em; margin: 2em;">
+                            An update is avalible : <asp:Button ID="update" runat="server" Text="Update" OnClick="update_Click"/>
+                        </div>
+                    </asp:Panel>
                     <div class="dashboardColWrapper">
                         <div class="dashboardCols">
                             <div class="dashboardCol">

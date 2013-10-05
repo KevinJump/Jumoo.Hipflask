@@ -15,7 +15,12 @@ namespace Jumoo.Hipflask
             List<string> hipsters =  s.GetHipsters();
 
             HipsterList.DataSource = hipsters;
-            HipsterList.DataBind(); 
+            HipsterList.DataBind();
+
+            if (s.CheckForUpdate())
+            {
+                updateCheck.Visible = true; 
+            }
 
         }
 
@@ -63,6 +68,13 @@ namespace Jumoo.Hipflask
 
                 Status.Text = "Done " + hipthing;
             }
+        }
+
+        protected void update_Click(object sender, EventArgs e)
+        {
+            HipFlaskSettings s = new HipFlaskSettings();
+            s.UpdateSettingsFile();
+            Status.Text = "Updated Settings (Refresh?)"; 
         }
     }
 }

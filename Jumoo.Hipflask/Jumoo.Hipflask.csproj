@@ -78,7 +78,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="HipFlask.config" />
+    <Content Include="HipFlask.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -111,6 +113,12 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>XCOPY "$(TargetPath)" "E:\Files\Dev\Umbraco\versions\6.1.6\bin\" /q /y
+XCOPY "$(ProjectDir)Hipflaskdashboard.ascx"  "E:\Files\Dev\Umbraco\versions\6.1.6\UserControls\HipFlask\" /q /y
+XCOPY "$(ProjectDir)Hipflask.config"  "E:\Files\Dev\Umbraco\versions\6.1.6\Config\" /q /y
+</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
